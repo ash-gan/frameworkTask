@@ -1,33 +1,20 @@
  Feature: Search Page Scenarios
 
 
-  Scenario Outline: User is able to search for input on different search engines and get relevant results
-    Given user is navigates to a new "<search engine>" on browser window
-    When user enters a "madagascar" in search input box
-    Then user gets relevant search results with results including search term
+   @search
+  Scenario Outline: User is able to search a term on different browsers and verify first result is relevant
+    Given user is navigates to a new "<search engine>" on "<engine>" window
+    When user enters a "<search term>" in search input box
+    Then user gets relevant search results with results including expected "<keyTerm>"
     Examples:
-      | search engine |
-      | https://www.bing.com/ |
-      | https://www.google.com/ |
+      | search engine | engine | search term |  keyTerm|
+      | https://www.bing.com/ | bing | madagascar |madagascar|
+      | https://www.google.com/ | google | $microsoft |microsoft|
+      | https://search.yahoo.com/   | yahoo | 2024 |2024        |
+      | https://www.google.com/     | google | @python3|python|
+      | https://www.bing.com/       | bing   |#100DaysOfCode| 100daysofcode|
+      | https://search.yahoo.com/   | yahoo  |2024 elections| 2024            |
+      | https://www.google.com/     | google | $BTC         | bitcoin         |
 
-
-   Scenario Outline: User is able to search for different inputs and get relevant results
-     Given user is navigates to a new "https://www.bing.com" on browser window
-     When user enters a "<search term>" in search input box
-     Then user gets relevant search results with results including search term
-     Examples:
-     | search term |
-     |yosemite|
-     |2024|
-
-     @search
-     Scenario Outline: User is able to search a term and first result in relevant
-       Given user is navigates to a new "<search engine>" on browser window
-       When user enters a "oppenheimer" in search input box
-       Then first returned result is relevant for searched term
-       Examples:
-         | search engine |
-         | https://www.bing.com/ |
-         | https://www.google.com/ |
 
 

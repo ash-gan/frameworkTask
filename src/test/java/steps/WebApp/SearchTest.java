@@ -14,55 +14,47 @@ import java.util.List;
 public class SearchTest extends CommonMethods {
 
     public String searchTerm;
-    public String url;
+    public String engine;
 
-    @Given("user is navigates to a new {string} on browser window")
-    public void user_is_navigates_to_a_new_on_browser_window(String url) {
-        openBrowserAndLaunchApplication(url);
-        this.url=url;
-    }
-
-    @When("user enters a {string} in search input box")
-    public void user_enters_a_in_search_input_box(String searchTerm) throws InterruptedException {
+    @Given("user is navigates to a new {string} on {string} window")
+    public void user_is_navigates_to_a_new_on_window(String website, String engineInTest) {
         // Write code here that turns the phrase above into concrete actions
-        this.searchTerm = searchTerm;
-        if(url.contains("bing")){
+        openBrowserAndLaunchApplication(website);
+        engine=engineInTest;
+    }
+    @When("user enters a {string} in search input box")
+    public void user_enters_a_in_search_input_box(String inputText) {
+        // Write code here that turns the phrase above into concrete actions
+        searchTerm = inputText;
+        if(engine.equals("bing")){
             click(bingSearchPage.bingSearchInput);
             sendText(bingSearchPage.bingSearchInput, searchTerm);
             sendKeyReturn(bingSearchPage.bingSearchInput);
-        }else if(url.contains("google")){
+        }else if(engine.equals("google")){
             click(googleSearchPage.SearchInputField);
             sendText(googleSearchPage.SearchInputField, searchTerm);
             sendKeyReturn(googleSearchPage.SearchInputField);
+        }else if(engine.equals("yahoo")){
+            click(yahooSearchPage.SearchInputField);
+            sendText(yahooSearchPage.SearchInputField, searchTerm);
+            sendKeyReturn(yahooSearchPage.SearchInputField);
         }
+
     }
 
-    @Then("first returned result is relevant for searched term")
-    public void first_returned_result_is_relevant_for_searched_term() {
+    @Then("user gets relevant search results with results including expected {string}")
+    public void user_gets_relevant_search_results_with_results_including_expected(String keyTerm) {
         // Write code here that turns the phrase above into concrete actions
-        if(url.contains("bing")){
-            Assert.assertTrue(bingResultsPage.firstResult.getText().toLowerCase().contains(searchTerm));
-
-        }else if(url.contains("google")){
-            Assert.assertTrue(googleResultsPage.firstResult.getText().toLowerCase().contains(searchTerm));
-        }
-    }
-
-    @Then("user gets relevant search results with results including search term")
-    public void user_gets_relevant_search_results_with_results_including_search_term() {
-        //iterate over the results to confirm search term
-        if(url.contains("bing")){
-
-            for(WebElement element: bingResultsPage.links){
-                String resultTitle = element.getText().toLowerCase();
-                if(!resultTitle.isEmpty()) {
-                    Assert.assertTrue(resultTitle.contains(searchTerm));
-                }
-            }
-        }else if(url.contains("google")){
-            for(WebElement element: googleResultsPage.titleResult){
-                Assert.assertTrue(element.getText().toLowerCase().contains(searchTerm));
-            }
+        if (engine.equals("bing")) {
+            System.out.println(bingResultsPage.firstResult.getText());
+            Assert.assertTrue(bingResultsPage.firstResult.getText().toLowerCase().contains(keyTerm.toLowerCase()));
+        } else if (engine.equals("google")) {
+            System.out.println(googleResultsPage.firstResult.getText());
+            Assert.assertTrue(googleResultsPage.firstResult.getText().toLowerCase().contains(keyTerm.toLowerCase()));
+        } else if (engine.equals("yahoo")) {
+            System.out.println(yahooResultsPage.firstResult.getText());
+            Assert.assertTrue(yahooResultsPage.firstResult.getText().toLowerCase().contains(keyTerm.toLowerCase()));
         }
     }
 }
+

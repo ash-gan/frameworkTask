@@ -34,6 +34,25 @@ public class CommonMethods extends PageInitializer{
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Constants.IMPLICIT_WAIT));
     }
 
+    public static void openBrowserAndLaunchApplication(){
+        ConfigReader.readProperties(Constants.CONFIGURATION_FILEPATH);
+        switch (ConfigReader.getPropertyValue("browser")){
+            case "chrome":
+                driver = new ChromeDriver();
+                break;
+            case "firefox":
+                driver = new FirefoxDriver();
+                break;
+            default:
+                throw new RuntimeException("invalid browser name");
+        }
+        driver.get(ConfigReader.getPropertyValue("url"));
+        driver.manage().window().maximize();
+
+        initializePageObjects();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Constants.IMPLICIT_WAIT));
+    }
+
     public void closeBrowser(){
         driver.quit();
     }

@@ -7,15 +7,12 @@ import utils.CommonMethods;
 
 import java.util.List;
 
-public class GoogleResultsPage extends CommonMethods {
-    @FindBy(xpath="//span/a/h3")
-    public List<WebElement> titleResult;
+public class YahooResultsPage extends CommonMethods {
 
-    @FindBy(xpath="(//a/h3)[2]")
+    @FindBy(xpath="(//h3/a/span)[1]")
     public WebElement firstResult;
 
-    public GoogleResultsPage(){
+    public YahooResultsPage(){
         PageFactory.initElements(driver, this);
     }
 }
-
