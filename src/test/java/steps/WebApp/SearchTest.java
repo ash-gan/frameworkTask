@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import utils.CommonMethods;
 import org.junit.Assert;
+import utils.HelperMethods;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class SearchTest extends CommonMethods {
 
     public String searchTerm;
     public String engine;
+    boolean searchResultRelevant;
 
     @Given("user is navigates to a new {string} on {string} window")
     public void user_is_navigates_to_a_new_on_window(String website, String engineInTest) {
@@ -45,15 +47,15 @@ public class SearchTest extends CommonMethods {
     @Then("user gets relevant search results with results including expected {string}")
     public void user_gets_relevant_search_results_with_results_including_expected(String keyTerm) {
         // Write code here that turns the phrase above into concrete actions
-        if (engine.equals("bing")) {
-            System.out.println(bingResultsPage.firstResult.getText());
-            Assert.assertTrue(bingResultsPage.firstResult.getText().toLowerCase().contains(keyTerm.toLowerCase()));
+        if(engine.equals("bing")) {
+            searchResultRelevant = HelperMethods.checkRelevantSearchTerm(keyTerm,bingResultsPage.firstResult.getText());
+            Assert.assertTrue("First search result title doesn't have key term",searchResultRelevant);
         } else if (engine.equals("google")) {
-            System.out.println(googleResultsPage.firstResult.getText());
-            Assert.assertTrue(googleResultsPage.firstResult.getText().toLowerCase().contains(keyTerm.toLowerCase()));
+            searchResultRelevant = HelperMethods.checkRelevantSearchTerm(keyTerm,googleResultsPage.firstResult.getText());
+            Assert.assertTrue("First search result title doesn't have key term",searchResultRelevant);
         } else if (engine.equals("yahoo")) {
-            System.out.println(yahooResultsPage.firstResult.getText());
-            Assert.assertTrue(yahooResultsPage.firstResult.getText().toLowerCase().contains(keyTerm.toLowerCase()));
+            searchResultRelevant = HelperMethods.checkRelevantSearchTerm(keyTerm,yahooResultsPage.firstResult.getText());
+            Assert.assertTrue("First search result title doesn't have key term",searchResultRelevant);
         }
     }
 }

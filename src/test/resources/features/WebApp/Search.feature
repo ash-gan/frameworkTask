@@ -11,10 +11,9 @@
       | https://www.bing.com/ | bing | madagascar |madagascar|
       | https://www.google.com/ | google | $microsoft |microsoft|
       | https://search.yahoo.com/   | yahoo | 2024 |2024        |
-      | https://www.google.com/     | google | @python3|python|
-      | https://www.bing.com/       | bing   |#100DaysOfCode| 100daysofcode|
-      | https://search.yahoo.com/   | yahoo  |2024 elections| 2024            |
-      | https://www.google.com/     | google | $BTC         | bitcoin         |
-
+      | https://www.google.com/     | google | @python3|python, python 3.0|
+      | https://www.bing.com/       | bing   |#100DaysOfCode| 100daysofcode, 100 days of code|
+      | https://search.yahoo.com/   | yahoo  |2024 elections| 2024, elections |
+      | https://www.google.com/     | google | $BTC         | bitcoin, btc |
 
 
